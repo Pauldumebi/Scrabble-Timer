@@ -21,8 +21,7 @@ const ModalComp = (props: modalCompProps) => {
   ): void => {
     const { name, value } = e.target;
     const list = [...props.players];
-    list[index][name as keyof { name: string }] = value as string;
-    console.log(list, "list");
+    list[index][name as keyof { name: string }] = value;
     props.setPlayers(list);
   };
 
