@@ -6,7 +6,7 @@ type modalCompProps = {
   onHide: () => void;
   players: { name: string }[];
   setPlayers: React.Dispatch<React.SetStateAction<{ name: string }[]>>;
-  noOfPlayers: string | number;
+  noOfPlayers: number | string;
   timerMinutes: string;
   timerSeconds: string;
   setNoOfPlayers: React.Dispatch<React.SetStateAction<string | number>>;
@@ -21,7 +21,7 @@ const ModalComp = (props: modalCompProps) => {
   ): void => {
     const { name, value } = e.target;
     const list = [...props.players];
-    list[index][name] = value;
+    list[index][name as keyof { name: string }] = value as string;
     console.log(list, "list");
     props.setPlayers(list);
   };
@@ -43,9 +43,10 @@ const ModalComp = (props: modalCompProps) => {
 
   const onChangeValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     props.setNoOfPlayers(event.target.value);
-    if (parseInt(props.noOfPlayers) < parseInt(event.target.value)) {
-      const difference =
-        parseInt(event.target.value) - parseInt(props.noOfPlayers);
+    const difference =
+      parseInt(event.target.value) - parseInt(props.noOfPlayers as string);
+
+    if (parseInt(props.noOfPlayers as string) < parseInt(event.target.value)) {
       console.log(difference, "difference");
       //   debugger;
       if (difference <= 1) {
@@ -55,8 +56,13 @@ const ModalComp = (props: modalCompProps) => {
         handleAddPlayer(`player 3`);
         handleAddPlayer(`player 4`);
       }
-    } else if (parseInt(props.noOfPlayers) > parseInt(event.target.value)) {
-      handleRemovePlayer();
+    } else if (parseInt(props.noOfPlayers as string) > parseInt(event.target.value)) {
+      if (difference <= 1) {
+        handleRemovePlayer();
+      } else {
+        handleRemovePlayer();
+        handleRemovePlayer();
+      }
     }
   };
 

@@ -13,7 +13,6 @@ type playerInfo = {
 };
 
 const App = () => {
-  //   const [minutes, seconds] = useCountdown(0 * 60 * 1000);
   const [controls, setControls] = useState<boolean>(false);
   const [modalShow, setModalShow] = useState<boolean>(false);
   const [timerMinutes, setTimerMinutes] = useState<string>("20");
